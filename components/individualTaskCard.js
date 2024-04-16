@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
 import ip_address from "../config"
 import { useNavigation } from "@react-navigation/core"

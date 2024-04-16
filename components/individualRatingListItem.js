@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { View, Text } from "react-native"
 import ip_address from "../config"
 

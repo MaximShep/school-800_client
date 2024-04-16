@@ -1,10 +1,11 @@
 import { useFocusEffect } from "@react-navigation/core";
-import { useCallback } from "react";
-import { FlatList, Text, View } from "react-native";
+import { useCallback, useState } from "react";
+import { FlatList, Text, View,useWindowDimensions } from "react-native";
 import { TabView, SceneMap ,TabBar} from 'react-native-tab-view';
 import GroupRatingListCard from "../../components/groupRatingListCard";
 import IndividualRatingListItem from "../../components/individualRatingListItem";
 import { ip_address } from "../../config";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 
 
@@ -12,7 +13,13 @@ import { ip_address } from "../../config";
 export default function UserRatingScreen(){
    
     const [data, setData] = useState([])
+    const [index, setIndex] = useState(0);
+    const layout = useWindowDimensions();
 
+    const [routes] = useState([
+      { key: 'first', title: 'Пн' },
+      { key: 'second', title: 'Вт' }      
+    ]);
     const [userData, setUserData] = useState([])
 
     const getAllGroups=()=>{
@@ -26,7 +33,7 @@ export default function UserRatingScreen(){
             var requestOptions = {
               method: 'GET',
               headers: myHeaders,
-              body: raw,
+             
               redirect: 'follow'
             };
             
@@ -52,7 +59,7 @@ export default function UserRatingScreen(){
             var requestOptions = {
               method: 'GET',
               headers: myHeaders,
-              body: raw,
+             
               redirect: 'follow'
             };
             
