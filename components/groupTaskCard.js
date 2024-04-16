@@ -10,7 +10,7 @@ export default function groupTaskCard(props){
     const [trackName, setTrackName] = useState("")
     const {navigate} = useNavigation()
 
-    const getImageOfTrack=()=>{
+    const getNameOfTrack=()=>{
         try {
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
