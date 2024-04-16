@@ -32,6 +32,7 @@ export default function UserTasksScreen(){
             fetch(ip_address+'/getAllIndividualTasks', requestOptions)
               .then( response => response.json())
               .then( result => {
+                console.log(result)
                 setIndividualTasksData(result)
             })
               .catch(error => console.log('error', error));
@@ -55,9 +56,10 @@ export default function UserTasksScreen(){
               redirect: 'follow'
             };
             
-            fetch(ip_address+'/getAllUsersDataByGrp', requestOptions)
+            fetch(ip_address+'/getAllGroupTasks', requestOptions)
               .then( response => response.json())
               .then( result => {
+                console.log(result)
                 setGroupTasksData(result)
             })
               .catch(error => console.log('error', error));

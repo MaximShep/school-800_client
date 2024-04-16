@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { View, Text, FlatList } from "react-native"
-import ip_address from "../config"
 import GroupRatingListItem from "./groupRatingListItem";
+import { useFocusEffect } from "@react-navigation/core";
+import { ip_address } from "../config";
 
 
 export default function GroupRatingListCard(props){
@@ -39,9 +40,9 @@ export default function GroupRatingListCard(props){
    
 
 
-    useEffect(()=>{
+    useFocusEffect(useCallback(()=>{
       getRawRating()
-    },[])
+    },[]))
 
 
     return(
@@ -66,6 +67,8 @@ export default function GroupRatingListCard(props){
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
                 />
+
+
           </View>
 
 

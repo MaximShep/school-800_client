@@ -26,7 +26,6 @@ export default function IndividualRatingListItem(props){
             fetch(ip_address+'/getImageOfGroup', requestOptions)
               .then( response => response.json())
               .then( result => {
-                console.log(result)
                 setgrp_Image(result)
             })
               .catch(error => console.log('error', error));

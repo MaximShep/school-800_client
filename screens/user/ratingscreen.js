@@ -33,7 +33,6 @@ export default function UserRatingScreen(){
             var requestOptions = {
               method: 'GET',
               headers: myHeaders,
-             
               redirect: 'follow'
             };
             
@@ -63,7 +62,7 @@ export default function UserRatingScreen(){
               redirect: 'follow'
             };
             
-            fetch(ip_address+'/getAllUsersData', requestOptions)
+            fetch(ip_address  +'/getAllUsersData', requestOptions)
               .then( response => response.json())
               .then( result => {
                 setUserData(result)
@@ -118,7 +117,7 @@ export default function UserRatingScreen(){
                 data={userData}
                 vertical={true}        
                 renderItem={({item})=> (
-                  <IndividualRatingListItem fio = {item.fio} points = {item.points} grp = {item.grp}/>
+                  <IndividualRatingListItem fio = {item.fio} points = {item.group_points + item.individual_points} grp = {item.grp}/>
                 )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
@@ -131,7 +130,7 @@ export default function UserRatingScreen(){
 
         const renderScene = SceneMap({
             first: ByGroups,
-            second: School,
+            second: School
            
           });
         
