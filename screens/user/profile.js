@@ -1,17 +1,107 @@
-import React, {useState} from 'react';
+import { useFocusEffect, useNavigation } from '@react-navigation/core';
+import React, {useCallback, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
-
+import { ip_address } from '../../config';
 
 
   
 
 export default function UserProfileScreen(){
    
+    const {navigate} = useNavigation()
 
     const [corpusName, setCorpusName] = useState("");
     const [points, setPoints] = useState(0)
     const [dataByTrack, setDataByTrack] = useState([])
 
+    const getCorpus = ()=>{
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+           
+            var raw = JSON.stringify({
+                corpus_id: global.corpus
+            });
+            var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            };
+            
+            fetch(ip_address+'/getCorpusName', requestOptions)
+              .then( response => response.json())
+              .then( result => {
+                setCorpusName(result)
+            })
+              .catch(error => console.log('error', error));
+        } catch (error) {
+          console.error(error);
+        }
+    }
+
+    const getPoints = () => {
+
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+           
+            var raw = JSON.stringify({
+                id: global.user_id
+            });
+            var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            };
+            
+            fetch(ip_address+'/getUserData', requestOptions)
+              .then( response => response.json())
+              .then( result => {
+                setPoints(result.individual_points + result.group_points)
+
+            })
+              .catch(error => console.log('error', error));
+        } catch (error) {
+          console.error(error);
+        }
+
+    }
+
+    const getDataByTrack = () => {
+        //getAllStatisticsForUser
+        try {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
+           
+            var raw = JSON.stringify({
+                user_id: global.user_id
+            });
+            var requestOptions = {
+              method: 'POST',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            };
+            
+            fetch(ip_address+'/getAllStatisticsForUser', requestOptions)
+              .then( response => response.json())
+              .then( result => {
+                setDataByTrack(result)
+            })
+              .catch(error => console.log('error', error));
+        } catch (error) {
+          console.error(error);
+        }
+
+    }
+
+    useFocusEffect(useCallback(()=>{
+        getCorpus()
+        getPoints()
+        getDataByTrack()
+    },[]))
 
     const DirectionItem = ({ direction, progress, tasksCompleted, color }) => {
         return (
@@ -30,14 +120,14 @@ export default function UserProfileScreen(){
             <View style={styles.container}>
         <View style={styles.header}>
           <Text style={styles.name}>{global.user_fio}</Text>
-          <Text style={styles.points}></Text>
+          <Text style={styles.points}>{points}</Text>
         </View>
         <View style={styles.separator} />
         <View style={styles.detailsContainer}>
           <View style={styles.column}>
             <Text style={styles.label}>Корпус</Text>
             <View style={styles.infoContainer}>
-              <Text style={styles.info}>Верхние печеньки</Text>
+              <Text style={styles.info}>{corpusName}</Text>
             </View>
           </View>
           <View style={styles.column}>
@@ -51,26 +141,20 @@ export default function UserProfileScreen(){
         <View style={styles.directionsContainer}>
           <Text style={styles.directionsLabel}>Направления</Text>
           <View style={styles.directionsColumn}>
-            <FlatList
-            
-            />
-            <DirectionItem direction="Волонтерская деятельность" progress={0.05} tasksCompleted={5} color="#EE7527" />
-            <DirectionItem direction="Спортивные мероприятия" progress={0.1} tasksCompleted={10} color="#3BBCDA" />
-            <DirectionItem direction="Индивидуальные достижения" progress={0.02} tasksCompleted={2} color="#3B4365" />
-            <DirectionItem direction="Наставничество" progress={0.2} tasksCompleted={100} color="#007C81" />
-            <DirectionItem direction="Проведение мастер-классов" progress={0.5} tasksCompleted={50} color="#D3DDF2" />
-            <DirectionItem direction="Дежурство по школе" progress={0.01} tasksCompleted={1} color="#D5F4F6" />
+          <FlatList
+                data={dataByTrack}
+                vertical={true}        
+                renderItem={({item})=> (
+                    <DirectionItem direction = {item.name} progress={item.progress} tasksCompleted={item.completed_tasks} color="#EE7527" />                )}
+                // ItemSeparatorComponent={() => {
+                //   return (<View style={styles.itemseparator}/>);}}
+                />
           </View>
         </View>
         <View style={styles.separator} />
-        <TouchableOpacity style={styles.addButton}>
+        <TouchableOpacity style={styles.addButton} onPress={()=>{navigate('Добавить портфолио')}}>
           <Text style={styles.addButtonText}>Добавить достижение</Text>
         </TouchableOpacity>
-        <View style={styles.bottomNavigation}>
-          <TouchableOpacity style={styles.bottomNavItem}></TouchableOpacity>
-          <TouchableOpacity style={styles.bottomNavItem}></TouchableOpacity>
-          <TouchableOpacity style={styles.bottomNavItem}></TouchableOpacity>
-        </View>
       </View>
         </View>
     )

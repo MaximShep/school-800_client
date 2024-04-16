@@ -8,17 +8,27 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import UserProfileScreen from '../screens/user/profile';
 import UserRatingScreen from '../screens/user/ratingscreen';
 import UserTasksScreen from '../screens/user/taskscreen';
+import CreatePortfolioScreen from '../screens/user/addAchievment';
 
 //Admin
 
 
 const Login_Stack = createNativeStackNavigator()
 const MainScreen_Stack = createBottomTabNavigator()
+const USerProfile_Stack = createNativeStackNavigator()
 
 
 
 
-
+function UserProfileNavigator(){
+    return(
+    
+        <USerProfile_Stack.Navigator>
+            <USerProfile_Stack.Screen name="ee" options={{headerShown: false}} component={UserProfileScreen}/>
+            <USerProfile_Stack.Screen name="Добавить портфолио"  options={{headerShown: false}} component={CreatePortfolioScreen}/>
+         </USerProfile_Stack.Navigator>
+      )
+}
 
 
 function UserMainScreenNavigator(){
@@ -28,7 +38,7 @@ function UserMainScreenNavigator(){
         <MainScreen_Stack.Navigator>
             <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
             <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
-            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileScreen}/>
+            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
          </MainScreen_Stack.Navigator>
       )
  //User
@@ -59,7 +69,7 @@ function Login_StackNavigator(){
         <MainScreen_Stack.Navigator>
             <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
             <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
-            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileScreen}/>
+            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
          </MainScreen_Stack.Navigator>
       )
   
