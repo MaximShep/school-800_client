@@ -4,7 +4,7 @@ import ip_address from "../config"
 import { useNavigation } from "@react-navigation/core"
 
 
-export default function individualTaskCard(props){
+export default function IndividualTaskCard(props){
 
     const {id, name, description, date_of_creation, date_of_deadline, point, track, image } = props
     const [trackName, setTrackName] = useState("")

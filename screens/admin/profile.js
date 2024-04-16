@@ -11,8 +11,6 @@ export default function UserProfileScreen(){
     const {navigate} = useNavigation()
 
     const [corpusName, setCorpusName] = useState("");
-    const [className, setClassName] = useState("");
-
     const [points, setPoints] = useState(0)
     const [dataByTrack, setDataByTrack] = useState([])
 
@@ -34,41 +32,13 @@ export default function UserProfileScreen(){
             fetch(ip_address+'/getCorpusName', requestOptions)
               .then( response => response.json())
               .then( result => {
-                console.log(result[0].name)
-                setCorpusName(result[0].name)
+                setCorpusName(result)
             })
               .catch(error => console.log('error', error));
         } catch (error) {
           console.error(error);
         }
     }
-
-    const getClass = ()=>{
-      try {
-          var myHeaders = new Headers();
-          myHeaders.append("Content-Type", "application/json");
-         
-          var raw = JSON.stringify({
-            class_id: global.class
-          });
-          var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          };
-          
-          fetch(ip_address+'/getClassName', requestOptions)
-            .then( response => response.json())
-            .then( result => {
-              console.log(result[0].name)
-              setClassName(result[0].name)
-          })
-            .catch(error => console.log('error', error));
-      } catch (error) {
-        console.error(error);
-      }
-  }
 
     const getPoints = () => {
 
@@ -89,7 +59,7 @@ export default function UserProfileScreen(){
             fetch(ip_address+'/getUserData', requestOptions)
               .then( response => response.json())
               .then( result => {
-                setPoints(result[0].individual_points + result[0].group_points)
+                setPoints(result.individual_points + result.group_points)
 
             })
               .catch(error => console.log('error', error));
@@ -118,7 +88,6 @@ export default function UserProfileScreen(){
             fetch(ip_address+'/getAllStatisticsForUser', requestOptions)
               .then( response => response.json())
               .then( result => {
-                //console.log(result)
                 setDataByTrack(result)
             })
               .catch(error => console.log('error', error));
@@ -131,7 +100,6 @@ export default function UserProfileScreen(){
     useFocusEffect(useCallback(()=>{
         getCorpus()
         getPoints()
-        getClass()
         getDataByTrack()
     },[]))
 
@@ -165,7 +133,7 @@ export default function UserProfileScreen(){
           <View style={styles.column}>
             <Text style={styles.label}>Класс</Text>
             <View style={styles.infoContainer}>
-              <Text style={styles.info}>{className}</Text>
+              <Text style={styles.info}>{global.user_class}</Text>
             </View>
           </View>
         </View>
@@ -177,7 +145,7 @@ export default function UserProfileScreen(){
                 data={dataByTrack}
                 vertical={true}        
                 renderItem={({item})=> (
-                    <DirectionItem direction = {item.track} progress={item.progress} tasksCompleted={item.completed_tasks} color="#EE7527" />                )}
+                    <DirectionItem direction = {item.name} progress={item.progress} tasksCompleted={item.completed_tasks} color="#EE7527" />                )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
                 />

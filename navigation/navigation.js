@@ -9,6 +9,9 @@ import UserProfileScreen from '../screens/user/profile';
 import UserRatingScreen from '../screens/user/ratingscreen';
 import UserTasksScreen from '../screens/user/taskscreen';
 import CreatePortfolioScreen from '../screens/user/addAchievment';
+import AdminTasksScreen from '../screens/admin/taskscreen';
+import checkPortfolioScreen from '../screens/admin/checkPortfolioScreen';
+import LoginScreen from '../screens/loginscreen';
 
 //Admin
 
@@ -33,30 +36,30 @@ function UserProfileNavigator(){
 
 function UserMainScreenNavigator(){
 
-    return(
     
-        <MainScreen_Stack.Navigator>
-            <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
-            <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
-            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
-         </MainScreen_Stack.Navigator>
-      )
  //User
  if(global.role === 1){
   return(
     
     <MainScreen_Stack.Navigator>
-        <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
-        <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
-        <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileScreen}/>
-     </MainScreen_Stack.Navigator>
+            <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
+            <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
+            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
+         </MainScreen_Stack.Navigator>
   )
  }
 
  //Admin
  if(global.role === 2){
-  
- }
+    return(
+    <MainScreen_Stack.Navigator>
+    <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={AdminTasksScreen}/>
+    <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
+    <MainScreen_Stack.Screen name="Чек"  options={{headerShown: false}} component={checkPortfolioScreen}/>
+    <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
+ </MainScreen_Stack.Navigator>
+ )
+}
 
  
 }
@@ -66,11 +69,10 @@ function Login_StackNavigator(){
   
     return(
     
-        <MainScreen_Stack.Navigator>
-            <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={UserTasksScreen}/>
-            <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
-            <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>
-         </MainScreen_Stack.Navigator>
+        <Login_Stack.Navigator>
+            <Login_Stack.Screen name="Авторизация" options={{headerShown: false}} component={LoginScreen}/>
+            <Login_Stack.Screen name="Главный экран"  options={{headerShown: false}} component={UserMainScreenNavigator}/>
+         </Login_Stack.Navigator>
       )
   
   

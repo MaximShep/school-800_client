@@ -2,6 +2,8 @@ import { useFocusEffect } from "@react-navigation/core";
 import { useCallback,useState } from "react";
 import { FlatList, Text, View } from "react-native";
 import { ip_address } from "../../config";
+import GroupTaskCard from "../../components/groupTaskCard";
+import IndividualTaskCard from "../../components/individualTaskCard";
 
 
 
@@ -76,7 +78,7 @@ export default function UserTasksScreen(){
                 data={groupTasksData}
                 horizontal={true}        
                 renderItem={({item})=> (
-                  <groupTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
+                  <GroupTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
                 )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
@@ -86,7 +88,7 @@ export default function UserTasksScreen(){
                 data={individualTasksData}
                 vertical={true}        
                 renderItem={({item})=> (
-                  <individualTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
+                  <IndividualTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
                 )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}

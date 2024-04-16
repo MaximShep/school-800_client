@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { View, Text, TouchableOpacity } from "react-native"
+import { Text, TouchableOpacity } from "react-native"
 import ip_address from "../config"
 import { useNavigation } from "@react-navigation/core"
 
 
-export default function groupTaskCard(props){
+export default function GroupTaskCard(props){
 
     const {id, name, description, date_of_creation, date_of_deadline, point, track, image } = props
     const [trackName, setTrackName] = useState("")
