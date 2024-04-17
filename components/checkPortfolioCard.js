@@ -20,13 +20,13 @@ const setScorePortfolio = () => {
            "score": score
         });
         var requestOptions = {
-          method: 'POST',
+          method: 'PUT',
           headers: myHeaders,
           body: raw,
           redirect: 'follow'
         };
         
-        fetch(ip_address+'/getTrackName', requestOptions)
+        fetch(ip_address+'/setPortfolioScore', requestOptions)
           .then( response => response.json())
           .then( result => {
         })
@@ -53,7 +53,7 @@ const deletePortfolio = () => {
           redirect: 'follow'
         };
         
-        fetch(ip_address+'/getTrackName', requestOptions)
+        fetch(ip_address+'/deletePortfolio', requestOptions)
           .then( response => response.json())
           .then( result => {
         })

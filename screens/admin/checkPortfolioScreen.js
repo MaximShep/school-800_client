@@ -24,7 +24,6 @@ export default function checkPortfolioScreen(){
             fetch(ip_address+'/getAllPortfolioForCheck', requestOptions)
               .then( response => response.json())
               .then( result => {
-                
                 setData(result)
             })
               .catch(error => console.log('error', error));
@@ -47,7 +46,7 @@ export default function checkPortfolioScreen(){
                renderItem={({item})=> (
                
                  <CheckPortfolioCard 
-                 id = {item.id} 
+                 id = {item.id-1} 
                  name = {item.fio}  
                  description = {item.class} 
                  avatar = {item.avatar} 
