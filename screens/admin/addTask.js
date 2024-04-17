@@ -1,84 +1,53 @@
 import { useState } from "react"
 import { Text, TextInput, Image, View, StyleSheet,FlatList, TouchableOpacity  } from "react-native";
 import { launchImageLibrary } from "react-native-image-picker";
-import { ip_address } from "../../config";
 import { useNavigation } from "@react-navigation/core";
 import { heightPercentageToDP, widthPercentageToDP } from "react-native-responsive-screen";
 import { Dropdown } from 'react-native-element-dropdown';
+import { ip_address } from "../../config";
 
 
 
 
 
 
-export default function CreatePortfolioScreen() {
+export default function createIndividualTask() {
 
     const {navigate} = useNavigation()
     const navigation = useNavigation()
 
-    const [name, setName] = useState('')
-    const [level, setLevel] = useState('')
-    const [place, setPlace] = useState('')
-    const [track, setTrack] = useState(1)
+    
+
+    const [name, setName] = useState(name)
+    const [description, setDescription] = useState('')
+    const [point, setPoint] = useState(point)
+    const [student, setStudent] = useState(1)
+    const [track, setTrack] = useState(track)
     const [image, setImage] = useState('')
 
-    const data_level = [
-  
-        {value:1,label:"Городской"},
-        {value:2,label:"Региональный"},
-        {value:3,label:"Межрегиональный"},
-        {value:4,label:"Всероссийский"},
-        {value:5,label:"международный"}
-      
-      ]
 
-      const data_Place = [
+
+      const data_Student = [
   
-        {value:1,label:"1 место"},
-        {value:2,label:"2 место"},
-        {value:3, label:"3 место"}
-      
+        {value:3,label:"Костя"},
+        {value:4,label:"Игорь"},
+        {value:5, label:"Максим"},
+        {value:6, label:"Никита"}
       ]
 
       const data_track = [
   
-        {value:1,label:"Видеонаблюдение"},
-        {value:2, label:"Cигнализация"}
-      
+        {value:1,label:"Спорт"},
+        {value:2, label:"Волонтерство"},
+        {value:3, label:"Наставничество"},
+        {value:4, label:"Дежурство по школе"},
+        {value:5, label:"Проведение мастер классов"},
+        {value:6, label:"Индивидуальные достижения"},
+
       ]
 
 
-      const DropdownLevelComponent = (props) => {
-    
-        const {sub} = props
-    
-        const renderItem = item => {
-          return (
-            <View style={styles.item}>
-              <Text style={styles.textItem}>{item.label}</Text>
-            </View>
-          );
-        };
-    
-        return (
-          <Dropdown
-            style={{ width:widthPercentageToDP(41)
-            }}
-            placeholderStyle={styles.componentViewText}
-            selectedTextStyle={styles.componentViewText}
-            iconStyle={{backgroundColor:'#fff'}}
-            data={data_level}
-            
-            maxHeight={400}
-            labelField="label"
-            valueField="value"
-            placeholder={sub}
-            value={level}
-            onChange={item => {setLevel(item.label);}}
-            renderItem={renderItem}
-          />
-        );
-      };
+      
 
       const DropdownPlaceComponent = (props) => {
     
@@ -100,14 +69,14 @@ export default function CreatePortfolioScreen() {
             selectedTextStyle={styles.componentViewText}
             inputSearchStyle={styles.inputSearchStyle}
             iconStyle={{backgroundColor:'#fff'}}
-            data={data_Place}
+            data={data_Student}
             
             maxHeight={400}
             labelField="label"
             valueField="value"
             placeholder={sub}
-            value={place}
-            onChange={item => {setPlace(item.label);}}
+            value={student}
+            onChange={item => {setStudent(item.id);}}
             renderItem={renderItem}
           />
         );
@@ -140,25 +109,26 @@ export default function CreatePortfolioScreen() {
             valueField="value"
             placeholder={sub}
             value={track}
-            onChange={item => {setTrack(item.value);}}
+            onChange={item => {setTrack(item.id);}}
             renderItem={renderItem}
           />
         );
       };
 
-    const addPortfolio = () =>{
-        if(name != "" && level != "" && place != "" && image != ""){
+    const addTask = () =>{
+        if(name != "" && point != "" && track != "" && student != ""){
             var myHeaders = new Headers();
             myHeaders.append("Content-Type", "application/json");
         
             var raw = JSON.stringify({
-                user: global.user_id,
-                name: name,
-                level: level,
-                place: place,
-                track:track,
-                image:image
-            });
+              name: name,
+              description: "description",
+              date_of_deadline: "",
+              point: 12,
+              student: student,
+              track: track,
+              image: image
+          });
             
         
             var requestOptions = {
@@ -169,7 +139,7 @@ export default function CreatePortfolioScreen() {
              
             };
            
-            fetch(ip_address + '/createPortfolio', requestOptions)
+            fetch(ip_address + '/createIndividualTask', requestOptions)
               .then(response => response.json())
               .then(result => { console.log(result)})
               .catch(error => console.log('error', error));
@@ -218,10 +188,6 @@ export default function CreatePortfolioScreen() {
              multiline = {true}
             />
 
-            <Text>
-                уровень мероприятия
-            </Text>
-            <DropdownLevelComponent/>
           
             <Text>
                 Направление
@@ -229,9 +195,20 @@ export default function CreatePortfolioScreen() {
             <DropdownTrackComponent/>
 
             <Text>
-                Место
+                Кто
             </Text> 
             <DropdownPlaceComponent/>
+
+            <Text>
+              Сколько баллов
+            </Text>
+            <TextInput
+             defaultValue='Введите балл'
+             style={styles.textinput}
+             onChangeText={setPoint}
+             value={point}
+             multiline = {true}
+            />
             
             <TouchableOpacity onPress={()=>{openGallery()}}>
             <Text style={styles.photoHead}>
@@ -249,10 +226,10 @@ export default function CreatePortfolioScreen() {
             />
           
             
-            <TouchableOpacity style={{justifyContent:'center',alignItems:'center', top:heightPercentageToDP(-1)}}onPress={()=>{addPortfolio()}}>
+            <TouchableOpacity style={{justifyContent:'center',alignItems:'center', top:heightPercentageToDP(-1)}}onPress={()=>{addTask()}}>
               
                 <Text>
-                    Отправить на модерацию
+                    Добавить
                 </Text>
                
             </TouchableOpacity>

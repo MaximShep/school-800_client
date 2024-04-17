@@ -17,10 +17,10 @@ export default function CreatePortfolioScreen() {
     const navigation = useNavigation()
 
     const [name, setName] = useState('')
-    const [level, setLevel] = useState('')
-    const [place, setPlace] = useState('')
+    const [level, setLevel] = useState(1)
+    const [place, setPlace] = useState(1)
     const [track, setTrack] = useState(1)
-    const [image, setImage] = useState('')
+    const [image, setImage] = useState('ghgh')
 
     const data_level = [
   
@@ -42,9 +42,13 @@ export default function CreatePortfolioScreen() {
 
       const data_track = [
   
-        {value:1,label:"Видеонаблюдение"},
-        {value:2, label:"Cигнализация"}
-      
+        {value:1,label:"Спорт"},
+        {value:2, label:"Волонтерство"},
+        {value:3, label:"Наставничество"},
+        {value:4, label:"Дежурство по школе"},
+        {value:5, label:"Проведение мастер классов"},
+        {value:6, label:"Индивидуальные достижения"},
+
       ]
 
 

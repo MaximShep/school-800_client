@@ -12,6 +12,7 @@ import CreatePortfolioScreen from '../screens/user/addAchievment';
 import AdminTasksScreen from '../screens/admin/taskscreen';
 import checkPortfolioScreen from '../screens/admin/checkPortfolioScreen';
 import LoginScreen from '../screens/loginscreen';
+import createIndividualTask from '../screens/admin/addTask';
 
 //Admin
 
@@ -19,8 +20,17 @@ import LoginScreen from '../screens/loginscreen';
 const Login_Stack = createNativeStackNavigator()
 const MainScreen_Stack = createBottomTabNavigator()
 const USerProfile_Stack = createNativeStackNavigator()
+const addTask_Stack = createNativeStackNavigator()
 
 
+function addTask_Navigator(){
+    return(
+        <addTask_Stack.Navigator>
+        <addTask_Stack.Screen name="ee" options={{headerShown: false}} component={AdminTasksScreen}/>
+        <addTask_Stack.Screen name="Создать задание"  options={{headerShown: false}} component={createIndividualTask}/>
+     </addTask_Stack.Navigator>
+    )
+}
 
 
 function UserProfileNavigator(){
@@ -53,7 +63,7 @@ function UserMainScreenNavigator(){
  if(global.role === 2){
     return(
     <MainScreen_Stack.Navigator>
-    <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={AdminTasksScreen}/>
+    <MainScreen_Stack.Screen name="Задания" options={{headerShown: false}} component={addTask_Navigator}/>
     <MainScreen_Stack.Screen name="Рейтинг"  options={{headerShown: false}} component={UserRatingScreen}/>
     <MainScreen_Stack.Screen name="Чек"  options={{headerShown: false}} component={checkPortfolioScreen}/>
     <MainScreen_Stack.Screen name="Профиль" options={{headerShown: false}} component={UserProfileNavigator}/>

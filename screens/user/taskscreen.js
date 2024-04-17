@@ -1,6 +1,6 @@
 import { useFocusEffect } from "@react-navigation/core";
 import { useCallback,useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { ip_address } from "../../config";
 import GroupTaskCard from "../../components/groupTaskCard";
 import IndividualTaskCard from "../../components/individualTaskCard";
@@ -95,6 +95,8 @@ export default function UserTasksScreen(){
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
                 />
+
+               
         </View>
     )
 

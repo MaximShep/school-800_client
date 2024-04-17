@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
 import { View, Text, TouchableOpacity } from "react-native"
-import ip_address from "../config"
 import { useNavigation } from "@react-navigation/core"
+import { ip_address } from "../config"
 
+export default function CheckTaskCard(props){
 
-export default function checkTaskCard(props){
-
-    const {id, name, description, date_of_creation, date_of_deadline, point, track, image } = props
+    const {id, name, point, track, student, image } = props
+    console.log(track)
     const [trackName, setTrackName] = useState("")
 
     const getNameOfTrack=()=>{
@@ -15,7 +15,7 @@ export default function checkTaskCard(props){
             myHeaders.append("Content-Type", "application/json");
            
             var raw = JSON.stringify({
-               "track_id" : track,
+               "id" : track,
             });
             var requestOptions = {
               method: 'POST',
@@ -28,7 +28,7 @@ export default function checkTaskCard(props){
               .then( response => response.json())
               .then( result => {
                 console.log(result)
-                setTrackName(result)
+                setTrackName(result[0].name)
             })
               .catch(error => console.log('error', error));
         } catch (error) {
@@ -42,16 +42,17 @@ export default function checkTaskCard(props){
             myHeaders.append("Content-Type", "application/json");
            
             var raw = JSON.stringify({
-               "track_id" : track,
+               "task_id" : id,
+               "user_id": student
             });
             var requestOptions = {
-              method: 'POST',
+              method: 'PUT',
               headers: myHeaders,
               body: raw,
               redirect: 'follow'
             };
             
-            fetch(ip_address+'/getTrackName', requestOptions)
+            fetch(ip_address+'/setIndividualTaskCompleted', requestOptions)
               .then( response => response.json())
               .then( result => {
             })
@@ -68,16 +69,16 @@ export default function checkTaskCard(props){
             myHeaders.append("Content-Type", "application/json");
            
             var raw = JSON.stringify({
-               "track_id" : track,
+               "task_id" : id,
             });
             var requestOptions = {
-              method: 'POST',
+              method: 'DELETE',
               headers: myHeaders,
               body: raw,
               redirect: 'follow'
             };
             
-            fetch(ip_address+'/getTrackName', requestOptions)
+            fetch(ip_address+'/deleteIndividualTask', requestOptions)
               .then( response => response.json())
               .then( result => {
             })

@@ -1,7 +1,8 @@
 import { useFocusEffect } from "@react-navigation/core";
-import { useCallback } from "react";
-import { FlatList } from "react-native";
-
+import { useCallback, useState, useEffect } from "react";
+import { FlatList, View, Text } from "react-native";
+import CheckPortfolioCard from "../../components/checkPortfolioCard";
+import { ip_address } from "../../config";
 
 
 export default function checkPortfolioScreen(){
@@ -15,14 +16,15 @@ export default function checkPortfolioScreen(){
            
            
             var requestOptions = {
-              method: 'POST',
+              method: 'GET',
               headers: myHeaders,
               redirect: 'follow'
             };
             
-            fetch(ip_address+'/getAllTasksForCheck', requestOptions)
+            fetch(ip_address+'/getAllPortfolioForCheck', requestOptions)
               .then( response => response.json())
               .then( result => {
+                
                 setData(result)
             })
               .catch(error => console.log('error', error));
@@ -31,9 +33,10 @@ export default function checkPortfolioScreen(){
         }
     }
     
-    useFocusEffect(useCallback(()=>{
-        getData()
-    }))
+    useEffect(()=>{
+      getData()
+
+    },[])
 
     return(
         <View>
@@ -43,7 +46,7 @@ export default function checkPortfolioScreen(){
                vertical={true}        
                renderItem={({item})=> (
                
-                 <checkPortfolioCard 
+                 <CheckPortfolioCard 
                  id = {item.id} 
                  name = {item.fio}  
                  description = {item.class} 

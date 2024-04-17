@@ -1,7 +1,13 @@
-import { useFocusEffect } from "@react-navigation/core";
+import { useFocusEffect, useNavigation } from "@react-navigation/core";
 import { useCallback,useState } from "react";
-import { FlatList, Text, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View, useWindowDimensions } from "react-native";
 import { ip_address } from "../../config";
+import { TabView, SceneMap ,TabBar} from 'react-native-tab-view';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import IndividualTaskCard from "../../components/individualTaskCard";
+import GroupRatingListCard from "../../components/groupRatingListCard";
+import GroupTaskCard from "../../components/groupTaskCard";
+import CheckTaskCard from "../../components/checkTaskCard";
 
 
 
@@ -12,6 +18,8 @@ export default function AdminTasksScreen(){
 
   const [index, setIndex] = useState(0);
   const layout = useWindowDimensions();
+
+  const {navigate} = useNavigation()
 
   const [routes] = useState([
     { key: 'first', title: 'Все задания' },
@@ -49,7 +57,6 @@ export default function AdminTasksScreen(){
  
   useFocusEffect(
       useCallback(()=>{
-      getAllGroups()
       getAllDataForSchool()
   },[]))
 
@@ -114,7 +121,7 @@ export default function AdminTasksScreen(){
                 data={groupTasksData}
                 horizontal={true}        
                 renderItem={({item})=> (
-                  <groupTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
+                  <GroupTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
                 )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
@@ -124,11 +131,16 @@ export default function AdminTasksScreen(){
                 data={individualTasksData}
                 vertical={true}        
                 renderItem={({item})=> (
-                  <individualTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
+                  <IndividualTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
                 )}
                 // ItemSeparatorComponent={() => {
                 //   return (<View style={styles.itemseparator}/>);}}
                 />
+                 <TouchableOpacity onPress={()=>{navigate('Создать задание')}}>
+                  <Text>
+                    создать индивидуальное задание
+                  </Text>
+                </TouchableOpacity>
         </View>
     )
 
@@ -147,7 +159,7 @@ export default function AdminTasksScreen(){
            
             
             var requestOptions = {
-              method: 'POST',
+              method: 'GET',
               headers: myHeaders,
               redirect: 'follow'
             };
@@ -176,7 +188,7 @@ export default function AdminTasksScreen(){
               data={allIndividualTasksForCheck}
               vertical={true}        
               renderItem={({item})=> (
-                <checkTaskCard id = {item.id} name = {item.name}  description = {item.description} date_of_creation = {item.date_of_creation} date_of_deadline = {item.date_of_deadline} point = {item.point} track = {item.track} image = {item.image} />
+                <CheckTaskCard id = {item.id} name = {item.name}   point = {item.point} track = {item.track} student = {item.student} image = {item.image} />
               )}
               // ItemSeparatorComponent={() => {
               //   return (<View style={styles.itemseparator}/>);}}

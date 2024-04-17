@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react"
-import { TextInput, TouchableOpacity, View, Text, TextInput } from "react-native"
+import { TextInput, TouchableOpacity, View, Text } from "react-native"
+import { ip_address } from "../config"
 
 
 
-
-export default function checkPortfolioCard(props){
+export default function CheckPortfolioCard(props){
 
 const { id, fio, classe, avatar, nameofkonkurs, level, place, photo} = props
 
