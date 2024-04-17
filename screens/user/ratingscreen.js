@@ -17,8 +17,8 @@ export default function UserRatingScreen(){
     const layout = useWindowDimensions();
 
     const [routes] = useState([
-      { key: 'first', title: 'Пн' },
-      { key: 'second', title: 'Вт' }      
+      { key: 'first', title: 'По факультетам' },
+      { key: 'second', title: 'Общешкольный' }      
     ]);
     const [userData, setUserData] = useState([])
 
